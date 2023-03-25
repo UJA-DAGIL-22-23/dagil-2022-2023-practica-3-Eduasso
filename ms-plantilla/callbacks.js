@@ -93,9 +93,9 @@ const CB_OTHERS = {
         try {
             CORS(res).status(200).json({
                 mensaje: "Microservicio MS Plantilla: acerca de",
-                autor: "¿¿¿ AUTOR ???",
-                email: "¿¿¿ EMAIL ???",
-                fecha: "¿¿¿ FECHA ???"
+                autor: "Eduardo Lomas Recena",
+                email: "elr00030@red.ujaen.es",
+                fecha: "23/03/2023"
             });
         } catch (error) {
             CORS(res).status(500).json({ error: error.description })

@@ -1,3 +1,318 @@
+# DATOS DEL ALUMNO
+* ### Nombre: Eduardo
+* ### Apellidos: Lomas Recena
+* ### Correo: elr00030@red.ujaen.es
+* ### Tablero Trello: https://trello.com/b/9jO7gez1/pr%C3%A1ctica3
+## Apartado 5.j
+Home de fauna
+<img src='./assets/img/home.jpg' width='1000px'>
+Base de datos
+<img src='./assets/img/database.jpg' width='1000px'>
+Colección
+<img src='./assets/img/coleccion.jpg' width='1000px'>
+
+***Documento 1***
+
+```json
+{
+  Nombre: "Reinhold Messner",
+  Fecha_nacimiento: {
+    Dia: 17,
+    Mes: 9,
+    Año: 1944
+  },
+  País: "Italia",
+  Grandes_Cumbre: [
+    "Everest",
+    "K2",
+    "Kanchenjunga",
+    "Lhotse",
+    "Makalu",
+    "Cho Oyu",
+    "Dhaulagiri",
+    "Manaslu",
+    "Nanga Parbat",
+    "Annapura",
+    "Gasherbrum I",
+    "Broad peak",
+    "Gasherbrum II",
+    "Shisha Pangma"
+  ],
+  cantidad_picos_8km: 14
+}
+```
+
+***Documento 2***
+
+```json
+{
+  Nombre: "Jerzy Kukuczka",
+  Fecha_nacimiento: {
+    Dia: 24,
+    Mes: 3,
+    Año: 1989
+  },
+  País: "Polonia",
+  Grandes_Cumbre: [
+    "Everest",
+    "K2",
+    "Kanchenjunga",
+    "Lhotse",
+    "Makalu",
+    "Cho Oyu",
+    "Dhaulagiri",
+    "Manaslu",
+    "Nanga Parbat",
+    "Annapura",
+    "Gasherbrum I",
+    "Broad peak",
+    "Gasherbrum II",
+    "Shisha Pangma"
+  ],
+  cantidad_picos_8km: 14
+}
+```
+
+***Documento 3***
+
+```json
+{
+  Nombre: "Walter Bonatti",
+  Fecha_nacimiento: {
+    Dia: 22,
+    Mes: 6,
+    Año: 1930
+  },
+  País: "Italia",
+  Grandes_Cumbre: ["K2"],
+  cantidad_picos_8km: 1
+}
+```
+
+***Documento 4***
+
+```json
+{
+  Nombre: "Erhard Loretan",
+  Fecha_nacimiento: {
+    Dia: 28,
+    Mes: 4,
+    Año: 1959
+  },
+  País: "Suiza",
+  Grandes_Cumbre: [
+    "Everest",
+    "K2",
+    "Kanchenjunga",
+    "Lhotse",
+    "Makalu",
+    "Cho Oyu",
+    "Dhaulagiri",
+    "Manaslu",
+    "Nanga Parbat",
+    "Annapura",
+    "Gasherbrum I",
+    "Broad peak",
+    "Gasherbrum II",
+    "Shisha Pangma"
+  ],
+  cantidad_picos_8km: 14
+}
+```
+
+***Documento 5***
+
+```json
+{
+  Nombre: "Hermann Buhl",
+  Fecha_nacimiento: {
+    Dia: 21,
+    Mes: 9,
+    Año: 1924
+  },
+  País: "Austria",
+  Grandes_Cumbre: ["Nanga Parbat", "Broad peak"],
+  cantidad_picos_8km: 2
+}
+```
+
+***Documento 6***
+
+```json
+{
+  Nombre: "Edward Whymper",
+  Fecha_nacimiento: {
+    Dia: 27,
+    Mes: 4,
+    Año: 1840
+  },
+  País: "Reino Unido",
+  Grandes_Cumbre: ["Cervino", "Chimborazo"],
+  cantidad_picos_8km: 0
+}
+```
+
+***Documento 7***
+
+```json
+{
+  Nombre: "Albert Mummery",
+  Fecha_nacimiento: {
+    Dia: 10,
+    Mes: 9,
+    Año: 1855
+  },
+  País: "Reino Unido",
+  Grandes_Cumbre: ["Cervino"],
+  cantidad_picos_8km: 0
+}
+```
+
+***Documento 8***
+
+```json
+{
+  Nombre: "Wanda Rutkiewicz",
+  Fecha_nacimiento: {
+    Dia: 4,
+    Mes: 2,
+    Año: 1943
+  },
+  País: "Polonia",
+  Grandes_Cumbre: [
+    "Everest",
+    "K2",
+    "Cho Oyu",
+    "Nanga Parbat",
+    "Annapura",
+    "Gasherbrum I",
+    "Gasherbrum II",
+    "Shisha Pangma"
+  ],
+  cantidad_picos_8km: 8
+}
+```
+
+***Documento 9***
+
+```json
+{
+  Nombre: "Edurne Pasaban",
+  Fecha_nacimiento: {
+    Dia: 1,
+    Mes: 8,
+    Año: 1973
+  },
+  País: "España",
+  Grandes_Cumbre: [
+    "Everest",
+    "K2",
+    "Kanchenjunga",
+    "Lhotse",
+    "Makalu",
+    "Cho Oyu",
+    "Dhaulagiri",
+    "Manaslu",
+    "Nanga Parbat",
+    "Annapura",
+    "Gasherbrum I",
+    "Broad peak",
+    "Gasherbrum II",
+    "Shisha Pangma"
+  ],
+  cantidad_picos_8km: 14
+}
+```
+
+***Documento 10***
+
+```json
+{
+  Nombre: "Gerlinde Kaltenbrunner",
+  Fecha_nacimiento: {
+    Dia: 13,
+    Mes: 12,
+    Año: 1970
+  },
+  País: "Austria",
+  Grandes_Cumbre: [
+    "Everest",
+    "K2",
+    "Kanchenjunga",
+    "Lhotse",
+    "Makalu",
+    "Cho Oyu",
+    "Dhaulagiri",
+    "Manaslu",
+    "Nanga Parbat",
+    "Annapura",
+    "Gasherbrum I",
+    "Broad peak",
+    "Gasherbrum II",
+    "Shisha Pangma"
+  ],
+  cantidad_picos_8km: 14
+}
+```
+# Incremento 1
+
+<img src='./assets/img/inicio_incremento_1.jpg' width='1000px'>
+
+Añadida HU-01
+
+<img src='./assets/img/HU-01.jpg' width='1000px'>
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+
+
+# Explicación de la Práctica
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=10405420&assignment_repo_type=AssignmentRepo)
 # *Plantilla Práctica Microservicios*: descripción de la aplicación
 
