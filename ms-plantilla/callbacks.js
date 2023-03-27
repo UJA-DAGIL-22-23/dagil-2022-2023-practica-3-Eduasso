@@ -14,10 +14,10 @@ const faunadb = require('faunadb'),
     q = faunadb.query;
 
 const client = new faunadb.Client({
-    secret: '¿¿¿ CLAVE SECRETA EN FAUNA PARA ESTA BBDD???',
+    secret: 'fnAE_hE3gqAAzadDVIMuzhcCM6PeEEtCy4SSiZ5l',
 });
 
-const COLLECTION = "¿¿¿ COLECCION ???"
+const COLLECTION = "ALPINISMO"
 
 // CALLBACKS DEL MODELO
 
@@ -58,6 +58,28 @@ const CB_MODEL_SELECTS = {
             res.status(200).json(personas)
         } catch (error) {
             res.status(500).json({ error: error.description })
+        }
+    },
+
+    /**
+     * Método para obtener todas las personas de la BBDD.
+     * @param {*} req Objeto con los parámetros que se han pasado en la llamada a esta URL 
+     * @param {*} res Objeto Response con las respuesta que se va a dar a la petición recibida
+     */
+    getTodas: async (req, res) => {
+        try {
+            let personas = await client.query(
+                q.Map(
+                    q.Paginate(q.Documents(q.Collection(COLLECTION))),
+                    q.Lambda("X", q.Get(q.Var("X")))
+                )
+            )
+            // console.log( personas ) // Para comprobar qué se ha devuelto en personas
+            CORS(res)
+                .status(200)
+                .json(personas)
+        } catch (error) {
+            CORS(res).status(500).json({ error: error.description })
         }
     },
 
