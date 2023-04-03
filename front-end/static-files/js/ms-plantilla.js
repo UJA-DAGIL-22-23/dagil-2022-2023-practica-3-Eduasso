@@ -18,6 +18,9 @@ Plantilla.datosDescargadosNulos = {
     fecha: ""
 }
 
+/// Objeto para almacenar los datos de la persona que se está mostrando
+Plantilla.personaMostrada = null
+
 // Tags que voy a usar para sustituir los campos
 Plantilla.plantillaTags = {
     "ID": "### ID ###",
@@ -27,6 +30,46 @@ Plantilla.plantillaTags = {
     "CUMBRES": "### CUMBRES ###",
     "PICOS 8KM": "### PICOS_8KM ###"
 }
+
+/// Plantilla para poner los datos de una persona en un tabla dentro de un formulario
+Plantilla.plantillaFormularioPersona = {}
+
+
+// Cabecera del formulario
+Plantilla.plantillaFormularioPersona.formulario = `
+<form method='post' action=''>
+    <table width="100%" class="listado-personas">
+        <thead>
+            <th width="10%">Id</th><th width="20%">Nombre</th><th width="20%">Fecha Nacimiento</th><th width="10%">País</th>
+            <th width="15%">Grandes Cumbres alcanzadas</th><th width="25%">Picos 8Km</th>
+        </thead>
+        <tbody>
+            <tr title="${Plantilla.plantillaTags.ID}">
+                <td><input type="text" class="form-persona-elemento" disabled id="form-persona-id"
+                        value="${Plantilla.plantillaTags.ID}" 
+                        name="id_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-nombre" required value="${Plantilla.plantillaTags.NOMBRE}" 
+                        name="nombre_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-apellidos" value="${Plantilla.plantillaTags.FECHA.DIA}/${Plantilla.plantillaTags.FECHA.MES}/${Plantilla.plantillaTags.FECHA.ANIO}" 
+                        name="fecha_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-email" required value="${Plantilla.plantillaTags.PAIS}" 
+                        name="pais_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-anio" required
+                        value="${Plantilla.plantillaTags.CUMBRES}" 
+                        name="cumbres_escaladas"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-email" required value="${Plantilla.plantillaTags["PICOS 8KM"]}" 
+                        name="picos_8km"/></td>
+                
+            </tr>
+        </tbody>
+    </table>
+</form>
+`;
 
 /// Plantilla para poner los datos de varias personas dentro de una tabla
 Plantilla.plantillaTablaPersonas = {}
@@ -53,6 +96,9 @@ Plantilla.plantillaTablaPersonas.cuerpo = `
         <td>${Plantilla.plantillaTags.PAIS}</td>
         <td>${Plantilla.plantillaTags.CUMBRES}</td>
         <td>${Plantilla.plantillaTags["PICOS 8KM"]}</td>
+        <td>
+                    <div><a href="javascript:Plantilla.mostrar('${Plantilla.plantillaTags.ID}')" class="opcion-secundaria mostrar">Mostrar</a></div>
+        </td>
     </tr>
     `;
 
@@ -162,6 +208,15 @@ Plantilla.plantillaTablaPersonas.actualiza = function (persona) {
 }
 
 /**
+ * Actualiza el formulario con los datos de la persona que se le pasa
+ * @param {Persona} Persona Objeto con los datos de la persona que queremos escribir en el TR
+ * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
+ */
+Plantilla.plantillaFormularioPersona.actualiza = function (persona) {
+    return Plantilla.sustituyeTags(this.formulario, persona)
+}
+
+/**
  * Función que recuperar todas las personas llamando al MS Personas
  * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
  */
@@ -188,6 +243,35 @@ Plantilla.recupera = async function (callBackFn){
 }
 
 /**
+ * Función que recuperar todas las personas llamando al MS Personas. 
+ * Posteriormente, llama a la función callBackFn para trabajar con los datos recuperados.
+ * @param {String} idPersona Identificador de la persona a mostrar
+ * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
+ */
+Plantilla.recuperaUnaPersona = async function (idPersona, callBackFn) {
+    try {
+        const url = Frontend.API_GATEWAY + "/plantilla/getPorId/" + idPersona
+        const response = await fetch(url);
+        if (response) {
+            const persona = await response.json()
+            callBackFn(persona)
+        }
+    } catch (error) {
+        alert("Error: No se han podido acceder al API Gateway")
+        console.error(error)
+    }
+}
+
+/**
+ * Imprime los datos de una persona como una tabla dentro de un formulario usando la plantilla del formulario.
+ * @param {persona} Persona Objeto con los datos de la persona
+ * @returns Una cadena con la tabla que tiene ya los datos actualizados
+ */
+Plantilla.personaComoFormulario = function (persona) {
+    return Plantilla.plantillaFormularioPersona.actualiza( persona );
+}
+
+/**
  * Función para mostrar en pantalla todas las personas que se han recuperado de la BBDD.
  * @param {Vector_de_personas} vector Vector con los datos de las personas a mostrar
  */
@@ -202,6 +286,31 @@ Plantilla.imprimeMuchasPersonas = function (vector) {
 
     //Borro toda la info de Article y la sustituyo por la que me interesa
     Frontend.Article.actualizar("Listado de persona", msj)
+}
+
+/**
+ * Función para mostrar en pantalla los detalles de una persona que se ha recuperado de la BBDD por su id
+ * @param {Persona} persona Datos de la persona a mostrar
+ */
+
+Plantilla.imprimeUnaPersona = function (persona) {
+    // console.log(persona) // Para comprobar lo que hay en vector
+    let msj = Plantilla.personaComoFormulario(persona);
+
+    // Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Mostrar una persona", msj)
+
+    // Actualiza el objeto que guarda los datos mostrados
+    Plantilla.almacenaDatos(persona)
+}
+
+/**
+ * Almacena los datos de la persona que se está mostrando
+ * @param {Persona} persona Datos de la persona a almacenar
+ */
+
+Plantilla.almacenaDatos = function (persona) {
+    Plantilla.personaMostrada = persona;
 }
 
 /**
@@ -223,4 +332,12 @@ Plantilla.procesarAcercaDe = function () {
  */
 Plantilla.listar = function (){
     Plantilla.recupera(Plantilla.imprimeMuchasPersonas);
+}
+
+/**
+ * Función principal para mostrar los datos de una persona desde el MS y, posteriormente, imprimirla.
+ * @param {String} idPersona Identificador de la persona a mostrar
+ */
+Plantilla.mostrar = function (idPersona) {
+    this.recuperaUnaPersona(idPersona, this.imprimeUnaPersona);
 }

@@ -57,5 +57,21 @@ router.get("/getTodas", async (req, res) => {
     }
 });
 
+router.param("idPersona", (req, res, next, id) => {
+    next();
+});
+  
+
+/**
+ * Devuelve los datos de la persona con el id pasado
+ */
+router.get("/getPorId/:idPersona", async (req, res) => {
+    try {
+        await callbacks.getPorId(req, res)
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 // Exporto el módulo para poder usarlo en server
 module.exports = router;
