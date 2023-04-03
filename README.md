@@ -262,6 +262,10 @@ Añadida HU-01
 
 <img src='./assets/img/HU-01.jpg' width='1000px'>
 
+Añadida HU-04
+
+<img src='./assets/img/HU-04.jpg' width='1000px'>
+
 ```
 
 

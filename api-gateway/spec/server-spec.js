@@ -42,5 +42,24 @@ describe('API Gateway: rutas estáticas', () => {
   })
 });
 
+describe('API Gateway: acceso a', () => {
+  describe('BBDD Personas', () => {
+    it(' > Obtener todas las personas: debe tener un campo data que es un array de 3 objetos', (done) => {
+      supertest(app)
+        .get('/plantilla/getTodas')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(function (res) {
+          //console.log( "Get Todos Personas", res.body ); // Para comprobar qué contiene exactamente res.body
+          assert(res.body.hasOwnProperty('data'));
+          assert(res.body.data.length === 10);
+
+        })
+        .end((error) => { error ? done.fail(error) : done() })
+    });
+  });
+
+});
+
 
 

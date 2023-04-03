@@ -20,6 +20,7 @@ Plantilla.datosDescargadosNulos = {
 
 // Tags que voy a usar para sustituir los campos
 Plantilla.plantillaTags = {
+    "ID": "### ID ###",
     "NOMBRE": "### NOMBRE ###",
     "FECHA": {"DIA": "### DIA ###", "MES": "### MES ###", "ANIO": "### ANIO ###"},
     "PAIS": "### PAIS ###",
@@ -33,6 +34,7 @@ Plantilla.plantillaTablaPersonas = {}
 // Cabecera de la tabla
 Plantilla.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-personas">
                     <thead>
+                        <th width="10%">ID</th>
                         <th width="10%">Nombre</th>
                         <th width="20%">Fecha de nacimiento</th>
                         <th width="20%">Pais de nacimiento</th>
@@ -44,7 +46,8 @@ Plantilla.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-
 
 // Elemento TR que muestra los datos de una persona
 Plantilla.plantillaTablaPersonas.cuerpo = `
-    <tr title="${Plantilla.plantillaTags.NOMBRE}">
+    <tr title="${Plantilla.plantillaTags.ID}">
+        <td>${Plantilla.plantillaTags.ID}</td>
         <td>${Plantilla.plantillaTags.NOMBRE}</td>
         <td>${Plantilla.plantillaTags.FECHA.DIA}/${Plantilla.plantillaTags.FECHA.MES}/${Plantilla.plantillaTags.FECHA.ANIO}</td>
         <td>${Plantilla.plantillaTags.PAIS}</td>
@@ -139,6 +142,7 @@ Plantilla.mostrarAcercaDe = function (datosDescargados) {
  */           
 Plantilla.sustituyeTags = function (plantilla, persona) {
     return plantilla
+        .replace(new RegExp(Plantilla.plantillaTags.ID, 'g'), persona.ref['@ref'].id)
         .replace(new RegExp(Plantilla.plantillaTags.NOMBRE, 'g'), persona.data.Nombre)
         .replace(new RegExp(Plantilla.plantillaTags.FECHA.DIA, 'g'), persona.data.Fecha_nacimiento.Dia)
         .replace(new RegExp(Plantilla.plantillaTags.FECHA.MES, 'g'), persona.data.Fecha_nacimiento.Mes)
