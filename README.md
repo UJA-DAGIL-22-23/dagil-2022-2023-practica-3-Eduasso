@@ -255,6 +255,7 @@ Colección
 }
 ```
 # Incremento 1
+En este primer incremento he implementado las historias de usuario 1, 4 y 6 tal y como se puede comprobar en las capturas de pantalla de debajo
 
 <img src='./assets/img/inicio_incremento_1.jpg' width='1000px'>
 
@@ -269,6 +270,10 @@ Añadida HU-04
 Añadida HU-06
 
 <img src='./assets/img/HU-06.jpg' width='1000px'>
+
+Fin de incremento
+
+<img src='./assets/img/final_incremento_1.jpg' width='1000px'>
 
 ```
 
