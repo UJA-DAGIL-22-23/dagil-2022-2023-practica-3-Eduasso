@@ -10,6 +10,15 @@
 /// Creo el espacio de nombres
 let Plantilla = {};
 
+/// Nombre de los campos del formulario para editar una persona
+Plantilla.form = {
+    NOMBRE: "form-persona-nombre",
+    FECHA_NACIMIENTO: "form-persona-fecha",
+    PAIS: "form-persona-pais",
+    CUMBRES: "form-persona-cumbres",
+    PICOS_8KM: "form-persona-picos_8km",
+}
+
 // Plantilla de datosDescargados vacíos
 Plantilla.datosDescargadosNulos = {
     mensaje: "Datos Descargados No válidos",
@@ -52,19 +61,23 @@ Plantilla.plantillaFormularioPersona.formulario = `
                         id="form-persona-nombre" required value="${Plantilla.plantillaTags.NOMBRE}" 
                         name="nombre_persona"/></td>
                 <td><input type="text" class="form-persona-elemento editable" disabled
-                        id="form-persona-apellidos" value="${Plantilla.plantillaTags.FECHA.DIA}/${Plantilla.plantillaTags.FECHA.MES}/${Plantilla.plantillaTags.FECHA.ANIO}" 
+                        id="form-persona-fecha" value="${Plantilla.plantillaTags.FECHA.DIA}/${Plantilla.plantillaTags.FECHA.MES}/${Plantilla.plantillaTags.FECHA.ANIO}" 
                         name="fecha_persona"/></td>
                 <td><input type="text" class="form-persona-elemento editable" disabled
-                        id="form-persona-email" required value="${Plantilla.plantillaTags.PAIS}" 
+                        id="form-persona-pais" required value="${Plantilla.plantillaTags.PAIS}" 
                         name="pais_persona"/></td>
                 <td><input type="text" class="form-persona-elemento editable" disabled
-                        id="form-persona-anio" required
+                        id="form-persona-cumbres" required
                         value="${Plantilla.plantillaTags.CUMBRES}" 
                         name="cumbres_escaladas"/></td>
-                <td><input type="text" class="form-persona-elemento editable" disabled
-                        id="form-persona-email" required value="${Plantilla.plantillaTags["PICOS 8KM"]}" 
+                <td><input type="number" class="form-persona-elemento editable" disabled
+                        id="form-persona-picos_8km" required value="${Plantilla.plantillaTags["PICOS 8KM"]}" 
                         name="picos_8km"/></td>
-                
+                <td>
+                    <div><a href="javascript:Plantilla.editar()" class="opcion-secundaria mostrar">Editar</a></div>
+                    <div><a href="javascript:Plantilla.guardar()" class="opcion-terciaria editar ocultar">Guardar</a></div>
+                    <div><a href="javascript:Plantilla.cancelar()" class="opcion-terciaria editar ocultar">Cancelar</a></div>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -314,6 +327,15 @@ Plantilla.almacenaDatos = function (persona) {
 }
 
 /**
+ * Recupera los valores almacenados de la persona que se estaba mostrando
+ * @return Datos de la persona a almacenada
+ */
+
+Plantilla.recuperaDatosAlmacenados = function () {
+    return this.personaMostrada;
+}
+
+/**
  * Función principal para responder al evento de elegir la opción "Home"
  */
 Plantilla.procesarHome = function () {
@@ -340,4 +362,147 @@ Plantilla.listar = function (){
  */
 Plantilla.mostrar = function (idPersona) {
     this.recuperaUnaPersona(idPersona, this.imprimeUnaPersona);
+}
+
+/**
+ * Establece disable = habilitando en los campos editables
+ * @param {boolean} Deshabilitando Indica si queremos deshabilitar o habilitar los campos
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Plantilla.habilitarDeshabilitarCamposEditables = function (deshabilitando) {
+    deshabilitando = (typeof deshabilitando === "undefined" || deshabilitando === null) ? true : deshabilitando
+    for (let campo in Plantilla.form) {
+        document.getElementById(Plantilla.form[campo]).disabled = deshabilitando
+    }
+    return this
+}
+
+/**
+ * Establece disable = true en los campos editables
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Plantilla.deshabilitarCamposEditables = function () {
+    Plantilla.habilitarDeshabilitarCamposEditables(true)
+    return this
+}
+
+/**
+ * Establece disable = false en los campos editables
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Plantilla.habilitarCamposEditables = function () {
+    Plantilla.habilitarDeshabilitarCamposEditables(false)
+    return this
+}
+
+/**
+ * ????Muestra las opciones que tiene el usuario cuando selecciona Editar
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Plantilla.opcionesMostrarOcultar = function (classname, mostrando) {
+    let opciones = document.getElementsByClassName(classname)
+    let claseQuitar = mostrando ? Frontend.CLASS_OCULTAR : Frontend.CLASS_MOSTRAR
+    let claseAniadir = !mostrando ? Frontend.CLASS_OCULTAR : Frontend.CLASS_MOSTRAR
+
+    for (let i = 0; i < opciones.length; ++i) {
+        Frontend.quitarClase(opciones[i], claseQuitar)
+            .aniadirClase(opciones[i], claseAniadir)
+    }
+    return this
+}
+
+/**
+ * Oculta todas las opciones secundarias
+ * @returns El propio objeto para encadenar llamadas
+ */
+Plantilla.ocultarOpcionesSecundarias = function () {
+    this.opcionesMostrarOcultar("opcion-secundaria", false)
+    return this
+}
+
+/**
+ * Muestra todas las opciones secundarias
+ * @returns El propio objeto para encadenar llamadas
+ */
+Plantilla.mostrarOpcionesSecundarias = function () {
+    this.opcionesMostrarOcultar("opcion-secundaria", true)
+    return this
+}
+
+
+/**
+ * Muestra las opciones que tiene el usuario cuando selecciona Editar
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Plantilla.mostrarOpcionesTerciariasEditar = function () {
+    this.opcionesMostrarOcultar("opcion-terciaria editar", true)
+    return this
+}
+
+/**
+ * Oculta las opciones que tiene el usuario cuando selecciona Editar
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Plantilla.ocultarOpcionesTerciariasEditar = function () {
+    this.opcionesMostrarOcultar("opcion-terciaria editar", false)
+    return this
+}
+
+/**
+ * Función que permite modificar los datos de una persona
+ */
+Plantilla.editar = function () {
+    this.ocultarOpcionesSecundarias()
+    this.mostrarOpcionesTerciariasEditar()
+    this.habilitarCamposEditables()
+}
+
+/**
+ * Función que permite cancelar la acción sobre los datos de una persona
+ */
+Plantilla.cancelar = function () {
+    this.imprimeUnaPersona(this.recuperaDatosAlmacenados())
+    this.deshabilitarCamposEditables()
+    this.ocultarOpcionesTerciariasEditar()
+    this.mostrarOpcionesSecundarias()
+}
+
+/**
+ * Función para guardar los nuevos datos de una persona
+ */
+Plantilla.guardar = async function () {
+    try {
+        let url = Frontend.API_GATEWAY + "/plantilla/setTodo/"
+        let id_persona = document.getElementById("form-persona-id").value
+        const response = await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'no-cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'omit', // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify({
+                "id_persona": id_persona,
+                "nombre_persona": document.getElementById("form-persona-nombre").value,
+                //"fecha_persona": document.getElementById("form-persona-fecha").value,
+                //"pais_persona": document.getElementById("form-persona-pais").value,
+                //"cumbres_escaladas": document.getElementById("form-persona-cumbres").value,
+                //"picos_8km": document.getElementById("form-persona-picos_8km").value
+            }), // body data type must match "Content-Type" header
+        })
+        /*
+        Error: No procesa bien la respuesta devuelta
+        if (response) {
+            const persona = await response.json()
+            alert(persona)
+        }
+        */
+        Plantilla.mostrar(id_persona)
+    } catch (error) {
+        alert("Error: No se han podido acceder al API Gateway " + error)
+        //console.error(error)
+    }
 }

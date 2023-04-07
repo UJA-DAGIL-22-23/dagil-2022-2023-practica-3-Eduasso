@@ -275,6 +275,15 @@ Fin de incremento
 
 <img src='./assets/img/final_incremento_1.jpg' width='1000px'>
 
+# Incremento 2
+
+<img src='./assets/img/inicio_incremento_2.jpg' width='1000px'>
+
+
+Añadida HU-12
+
+<img src='./assets/img/HU-12_01.jpg' widht='1000px'>
+
 ```
 
 
