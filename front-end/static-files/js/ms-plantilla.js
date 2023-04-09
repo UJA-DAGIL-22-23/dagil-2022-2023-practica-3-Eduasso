@@ -108,6 +108,14 @@ Plantilla.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-
                     <tbody>
     `;
 
+// Cabecera de la tabla de nombres
+Plantilla.plantillaTablaPersonas.cabeceraOrdenados = `<table width="100%" class="listado-personas">
+<thead>
+    <th width="10%">Nombre</th>
+</thead>
+<tbody>
+`;
+
 // Elemento TR que muestra los datos de una persona
 Plantilla.plantillaTablaPersonas.cuerpo = `
     <tr title="${Plantilla.plantillaTags.ID}">
@@ -120,6 +128,13 @@ Plantilla.plantillaTablaPersonas.cuerpo = `
         <td>
                     <div><a href="javascript:Plantilla.mostrar('${Plantilla.plantillaTags.ID}')" class="opcion-secundaria mostrar">Mostrar</a></div>
         </td>
+    </tr>
+    `;
+
+// Elemento TR que muestra los datos de una persona
+Plantilla.plantillaTablaPersonas.cuerpoOrdenados = `
+    <tr title="${Plantilla.plantillaTags.Nombre}">
+        <td>${Plantilla.plantillaTags.NOMBRE}</td>
     </tr>
     `;
 
@@ -229,6 +244,15 @@ Plantilla.plantillaTablaPersonas.actualiza = function (persona) {
 }
 
 /**
+ * Actualiza el cuerpo de la tabla con los nombres ordenados que se le pasa
+ * @param {Persona} Persona Objeto con los nombres que queremos escribir en el TR
+ * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
+ */
+Plantilla.plantillaTablaPersonas.actualizaOrdenados = function (persona) {
+    return Plantilla.sustituyeTags(this.cuerpoOrdenados, persona)
+}
+
+/**
  * Actualiza el formulario con los datos de la persona que se le pasa
  * @param {Persona} Persona Objeto con los datos de la persona que queremos escribir en el TR
  * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
@@ -311,6 +335,32 @@ Plantilla.imprimeMuchasPersonas = function (vector) {
 }
 
 /**
+ * Función para mostrar en pantalla todas lo nombres ordenados alfabéticamente que se han recuperado de la BBDD.
+ * @param {Vector_de_personas} vector Vector con los datos de las personas a mostrar
+ */
+
+Plantilla.imprimeNombresOrdenados = function(vector) {
+     console.log(vector) // Para comprobar lo que hay en vector
+    vector.sort((a, b) => {
+        if (a.data.Nombre == b.data.Nombre) {
+          return 0;
+        }
+        if (a.data.Nombre < b.data.Nombre) {
+          return -1;
+        }
+        return 1;
+      });
+    // Compongo el contenido que se va a mostrar dentro de la tabla
+    let msj = Plantilla.plantillaTablaPersonas.cabeceraOrdenados
+    
+    vector.forEach(e => msj += Plantilla.plantillaTablaPersonas.actualizaOrdenados(e))
+    msj += Plantilla.plantillaTablaPersonas.pie
+
+    //Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Personas ordenadas alfabéticamente", msj)
+}
+
+/**
  * Función para mostrar en pantalla los detalles de una persona que se ha recuperado de la BBDD por su id
  * @param {Persona} persona Datos de la persona a mostrar
  */
@@ -363,6 +413,13 @@ Plantilla.procesarAcercaDe = function () {
  */
 Plantilla.listar = function (){
     Plantilla.recupera(Plantilla.imprimeMuchasPersonas);
+}
+
+/**
+ * Función principal para recuperar las personas desde el MS y, ordenarlas por nombre e imprimirlas.
+ */
+Plantilla.listarOrdenados = function (){
+    Plantilla.recupera(Plantilla.imprimeNombresOrdenados);
 }
 
 /**
