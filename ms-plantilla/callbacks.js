@@ -123,10 +123,10 @@ const CB_MODEL_SELECTS = {
                     {
                         data: {
                             Nombre: data.nombre_persona,
-                            //Fecha_nacimiento: data.fecha_persona,
-                            //País: data.pais_persona,
-                            //Grandes_Cumbres: data.cumbres_escaladas,
-                            //cantidad_picos_8km: data.picos_8km,
+                            Fecha_nacimiento:{Dia: data.dia_persona, Mes: data.mes_persona, Año: data.anio_persona} ,
+                            País: data.pais_persona,
+                            Grandes_Cumbre: data.cumbres_escaladas,
+                            cantidad_picos_8km: data.picos_8km,
                         },
                     },
                 )

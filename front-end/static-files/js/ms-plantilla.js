@@ -13,7 +13,9 @@ let Plantilla = {};
 /// Nombre de los campos del formulario para editar una persona
 Plantilla.form = {
     NOMBRE: "form-persona-nombre",
-    FECHA_NACIMIENTO: "form-persona-fecha",
+    DIA: "form-persona-dia", 
+    MES: "form-persona-mes", 
+    ANIO: "form-persona-anio" ,
     PAIS: "form-persona-pais",
     CUMBRES: "form-persona-cumbres",
     PICOS_8KM: "form-persona-picos_8km",
@@ -49,8 +51,8 @@ Plantilla.plantillaFormularioPersona.formulario = `
 <form method='post' action=''>
     <table width="100%" class="listado-personas">
         <thead>
-            <th width="10%">Id</th><th width="20%">Nombre</th><th width="20%">Fecha Nacimiento</th><th width="10%">País</th>
-            <th width="15%">Grandes Cumbres alcanzadas</th><th width="25%">Picos 8Km</th>
+            <th width="10%">Id</th><th width="15%">Nombre</th><th width="10%">Dia</th><th width="10%">Mes</th><th width="10%">Año</th><th width="10%">País</th>
+            <th width="15%">Grandes Cumbres alcanzadas</th><th width="20%">Picos 8Km</th>
         </thead>
         <tbody>
             <tr title="${Plantilla.plantillaTags.ID}">
@@ -60,9 +62,15 @@ Plantilla.plantillaFormularioPersona.formulario = `
                 <td><input type="text" class="form-persona-elemento editable" disabled
                         id="form-persona-nombre" required value="${Plantilla.plantillaTags.NOMBRE}" 
                         name="nombre_persona"/></td>
-                <td><input type="text" class="form-persona-elemento editable" disabled
-                        id="form-persona-fecha" value="${Plantilla.plantillaTags.FECHA.DIA}/${Plantilla.plantillaTags.FECHA.MES}/${Plantilla.plantillaTags.FECHA.ANIO}" 
-                        name="fecha_persona"/></td>
+                <td><input type="number" class="form-persona-elemento editable" disabled
+                        id="form-persona-dia" value="${Plantilla.plantillaTags.FECHA.DIA}" 
+                        name="dia_persona"/></td>
+                <td><input type="number" class="form-persona-elemento editable" disabled
+                        id="form-persona-mes" value="${Plantilla.plantillaTags.FECHA.MES}" 
+                        name="mes_persona"/></td>
+                <td><input type="number" class="form-persona-elemento editable" disabled
+                        id="form-persona-anio" value="${Plantilla.plantillaTags.FECHA.ANIO}" 
+                        name="anio_persona"/></td>
                 <td><input type="text" class="form-persona-elemento editable" disabled
                         id="form-persona-pais" required value="${Plantilla.plantillaTags.PAIS}" 
                         name="pais_persona"/></td>
@@ -294,6 +302,7 @@ Plantilla.imprimeMuchasPersonas = function (vector) {
 
     // Compongo el contenido que se va a mostrar dentro de la tabla
     let msj = Plantilla.plantillaTablaPersonas.cabecera
+    
     vector.forEach(e => msj += Plantilla.plantillaTablaPersonas.actualiza(e))
     msj += Plantilla.plantillaTablaPersonas.pie
 
@@ -487,10 +496,12 @@ Plantilla.guardar = async function () {
             body: JSON.stringify({
                 "id_persona": id_persona,
                 "nombre_persona": document.getElementById("form-persona-nombre").value,
-                //"fecha_persona": document.getElementById("form-persona-fecha").value,
-                //"pais_persona": document.getElementById("form-persona-pais").value,
-                //"cumbres_escaladas": document.getElementById("form-persona-cumbres").value,
-                //"picos_8km": document.getElementById("form-persona-picos_8km").value
+                "dia_persona":  parseInt(document.getElementById("form-persona-dia").value),
+                "mes_persona":  parseInt(document.getElementById("form-persona-mes").value),
+                "anio_persona":  parseInt(document.getElementById("form-persona-anio").value),
+                "pais_persona": document.getElementById("form-persona-pais").value,
+                "cumbres_escaladas": document.getElementById("form-persona-cumbres").value.split(','),
+                "picos_8km": parseInt(document.getElementById("form-persona-picos_8km").value)
             }), // body data type must match "Content-Type" header
         })
         /*

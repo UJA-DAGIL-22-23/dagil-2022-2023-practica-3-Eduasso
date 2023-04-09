@@ -283,6 +283,14 @@ Fin de incremento
 Añadida HU-12
 
 <img src='./assets/img/HU-12_01.jpg' widht='1000px'>
+<img src='./assets/img/HU-12_02.jpg' widht='1000px'>
+<img src='./assets/img/HU-12_03.jpg' widht='1000px'>
+
+Añadida HU-13
+
+<img src='./assets/img/HU-13_01.jpg' widht='1000px'>
+<img src='./assets/img/HU-13_02.jpg' widht='1000px'>
+<img src='./assets/img/HU-13_03.jpg' widht='1000px'>
 
 ```
 
