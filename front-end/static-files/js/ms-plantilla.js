@@ -10,6 +10,9 @@
 /// Creo el espacio de nombres
 let Plantilla = {};
 
+let TodasPersonas = null;
+let pos = null;
+
 /// Nombre de los campos del formulario para editar una persona
 Plantilla.form = {
     NOMBRE: "form-persona-nombre",
@@ -52,7 +55,7 @@ Plantilla.plantillaFormularioPersona.formulario = `
     <table width="100%" class="listado-personas">
         <thead>
             <th width="10%">Id</th><th width="15%">Nombre</th><th width="10%">Dia</th><th width="10%">Mes</th><th width="10%">Año</th><th width="10%">País</th>
-            <th width="15%">Grandes Cumbres alcanzadas</th><th width="20%">Picos 8Km</th>
+            <th width="15%">Grandes Cumbres alcanzadas</th><th width="20%">Picos 8Km</th><th width="10%"></th>
         </thead>
         <tbody>
             <tr title="${Plantilla.plantillaTags.ID}">
@@ -89,6 +92,8 @@ Plantilla.plantillaFormularioPersona.formulario = `
             </tr>
         </tbody>
     </table>
+    <center><div><a href="javascript:Plantilla.siguiente(false)" class="opcion-secundaria mostrar">Anterior</a>
+                <a href="javascript:Plantilla.siguiente(true)" class="opcion-secundaria mostrar">Siguiente</a></div></center>
 </form>
 `;
 
@@ -104,6 +109,7 @@ Plantilla.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-
                         <th width="20%">Pais de nacimiento</th>
                         <th width="30%">Grandes Cumbres Alcanzadas</th>
                         <th width="10%">Picos 8km</th>
+                        <th width="10%"></th>
                     </thead>
                     <tbody>
     `;
@@ -283,6 +289,7 @@ Plantilla.recupera = async function (callBackFn){
     let vectorPersonas = null
     if (response) {
         vectorPersonas = await response.json()
+        TodasPersonas = vectorPersonas
         callBackFn(vectorPersonas.data)
     }
 }
@@ -427,6 +434,29 @@ Plantilla.listarOrdenados = function (){
  * @param {String} idPersona Identificador de la persona a mostrar
  */
 Plantilla.mostrar = function (idPersona) {
+    for (let i = 0; i < TodasPersonas.data.length; i++) {
+        //console.log(TodasPersonas.data[i].ref['@ref'].id);
+        if(TodasPersonas.data[i].ref['@ref'].id == idPersona){
+            pos = i;
+        }
+    }
+    this.recuperaUnaPersona(idPersona, this.imprimeUnaPersona);
+}
+
+/**
+ * Función principal para visualizar el siguiente/anterior jugador.
+ * @param {Boolean} siguiente Valor para saber si avanza o retrocede
+ */
+Plantilla.siguiente = function (siguiente) {
+    if(siguiente){
+        pos = (pos + 1) % TodasPersonas.data.length;
+    }else{
+        pos = pos - 1;
+        if(pos < 0){
+            pos = TodasPersonas.data.length - 1;
+        }
+    }
+    let idPersona = TodasPersonas.data[pos].ref['@ref'].id;
     this.recuperaUnaPersona(idPersona, this.imprimeUnaPersona);
 }
 
