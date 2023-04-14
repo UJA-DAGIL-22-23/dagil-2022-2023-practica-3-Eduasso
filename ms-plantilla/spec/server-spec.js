@@ -91,6 +91,31 @@ describe('Servidor PLANTILLA:', () => {
         );
     });
 
+    it('Devuelve Rogelio al recuperar los datos de la Persona con id 359742297009553613 mediante setTodo', (done) => {
+      const NOMBRE_TEST= 'Rogelio'
+      const persona = {
+        id_persona: '359742297009553613', //Anteriormente Albert Mummery
+        nombre_persona: NOMBRE_TEST,
+        dia_persona: 10,
+        mes_persona: 9,
+        anio_persona: 1855,
+        pais_persona: 'Reino Unido',
+        cumbres_escaladas: ['Cervino'],
+        picos_8km: 0
+      };
+      supertest(app)
+        .post('/setTodo')
+        .send(persona)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(function (res) {
+          //console.log( "Server-spec , /setTodo res.body", res.body ); // Para comprobar qué contiene exactamente res.body
+          assert(res.body.data.hasOwnProperty('Nombre'));
+          assert(res.body.data.Nombre === NOMBRE_TEST);
+        })
+        .end((error) => { error ? done.fail(error) : done(); }
+        );
+    });
 
   })
 });

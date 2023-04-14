@@ -123,6 +123,184 @@ describe("Plantilla.mostrarAcercaDe: ", function () {
         })
 })
 
+let cuerpoSpec =`
+<tr title="${Plantilla.plantillaTags.ID}">
+    <td>${Plantilla.plantillaTags.ID}</td>
+    <td>${Plantilla.plantillaTags.NOMBRE}</td>
+    <td>${Plantilla.plantillaTags.FECHA.DIA}/${Plantilla.plantillaTags.FECHA.MES}/${Plantilla.plantillaTags.FECHA.ANIO}</td>
+    <td>${Plantilla.plantillaTags.PAIS}</td>
+    <td>${Plantilla.plantillaTags.CUMBRES}</td>
+    <td>${Plantilla.plantillaTags["PICOS 8KM"]}</td>
+    <td>
+                <div><a href="javascript:Plantilla.mostrar('${Plantilla.plantillaTags.ID}')" class="opcion-secundaria mostrar">Mostrar</a></div>
+    </td>
+</tr>
+`;
+
+
+let personaSpec = {
+    ref: {
+        "@ref": {
+            id: "359740300845908172"
+        }
+    },
+    data: {
+        Nombre: "Paquito",
+        Fecha_nacimiento: {
+            Dia: 2,
+            Mes: 1,
+            Año: 1978
+        },
+        País: "España",
+        Grandes_Cumbre: [
+            "Everest",
+            "Lhotse"
+        ],
+        cantidad_picos_8km: 2
+    }
+}
+
+describe("Plantiya.sustituyeTags: ", function () {
+    it("Sustituye correctamente en la plantilla la Persona que se le pasa",
+    function () {
+        let planti = Plantilla.sustituyeTags(cuerpoSpec, personaSpec)
+        //console.log(planti)
+        expect(planti.includes(personaSpec.data.Nombre)).toBeTrue()
+        expect(planti.includes(personaSpec.data.Fecha_nacimiento.Dia)).toBeTrue()
+        expect(planti.includes(personaSpec.data.Fecha_nacimiento.Mes)).toBeTrue()
+        expect(planti.includes(personaSpec.data.Fecha_nacimiento.Año)).toBeTrue()
+        expect(planti.includes(personaSpec.data.País)).toBeTrue()
+        expect(planti.includes(personaSpec.data.Grandes_Cumbre[0])).toBeTrue()
+        expect(planti.includes(personaSpec.data.cantidad_picos_8km)).toBeTrue()
+    })
+})
+
+describe("Plantilla.almacenaDatos y Plantilla.recuperaDatosAlmacenados: ", function () {
+    it("Comprueba si almacena bien la persona que se le pasa",
+    function () {
+        Plantilla.almacenaDatos(personaSpec)
+        let nuevaPersona = Plantilla.recuperaDatosAlmacenados()
+        expect(nuevaPersona.data.Nombre == personaSpec.data.Nombre).toBeTrue()
+        expect(nuevaPersona.data.Fecha_nacimiento.Dia == personaSpec.data.Fecha_nacimiento.Dia).toBeTrue()
+        expect(nuevaPersona.data.Fecha_nacimiento.Mes == personaSpec.data.Fecha_nacimiento.Mes).toBeTrue()
+        expect(nuevaPersona.data.Fecha_nacimiento.Año == personaSpec.data.Fecha_nacimiento.Año).toBeTrue()
+        expect(nuevaPersona.data.País == personaSpec.data.País).toBeTrue()
+        expect(nuevaPersona.data.Grandes_Cumbre.length == personaSpec.data.Grandes_Cumbre.length).toBeTrue()
+        expect(nuevaPersona.data.cantidad_picos_8km == personaSpec.data.cantidad_picos_8km).toBeTrue()
+    })
+})
+
+let vectorPersonasSpec = [
+        {
+            ref: {
+                "@ref": {
+                    id: "359740300845908172"
+                }
+            },
+            data: {
+                Nombre: "Manolo",
+                Fecha_nacimiento: {
+                    Dia: 4,
+                    Mes: 5,
+                    Año: 1978
+                },
+                País: "Francia",
+                Grandes_Cumbre: [
+                    "Everest",
+                    "Lhotse"
+                ],
+                cantidad_picos_8km: 2
+            }
+        },
+        {
+            ref: {
+                "@ref": {
+                    id: "359741144242847949"
+                }
+            },
+            data: {
+                Nombre: "Ezio Auditore",
+                Fecha_nacimiento: {
+                    Dia: 2,
+                    Mes: 1,
+                    Año: 1978
+                },
+                País: "Italia",
+                Grandes_Cumbre: [
+                    "Everest",
+                    "Lhotse",
+                    "Kilimanjaro"
+                ],
+                cantidad_picos_8km: 3
+            }
+        }
+]
+
+describe("Plantilla.imprimeMuchasPersonas", function () {
+    it("Comprueba si actualiza correctamente el articulo",
+    function () {
+        Plantilla.imprimeMuchasPersonas(vectorPersonasSpec)
+        //console.log(document.getElementById( Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML)
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_TITULO).innerHTML.includes("Listado de personas")).toBeTrue()
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[0].ref['@ref'].id)).toBeTrue()
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[1].ref['@ref'].id)).toBeTrue()
+        for(let i = 0; i < vectorPersonasSpec.length; ++i){
+            expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[i].data.Nombre)).toBeTrue()
+        }
+    })
+})
+
+describe("Plantilla.imprimeNombres", function() {
+    it("Comprueba si actualiza correctamente el articulo",
+    function() {
+        Plantilla.imprimeNombres(vectorPersonasSpec)
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_TITULO).innerHTML.includes("Nombres de personas")).toBeTrue()
+        for(let i = 0; i < vectorPersonasSpec.length; ++i){
+            expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[i].data.Nombre)).toBeTrue()
+        }
+    })
+})
+
+describe("Plantilla.imprimeNombresOrdenados", function() {
+    it("Comprueba si actualiza correctamente el articulo",
+    function() {
+        Plantilla.imprimeNombresOrdenados(vectorPersonasSpec)
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_TITULO).innerHTML.includes("Nombres de personas ordenadas alfabéticamente")).toBeTrue()
+        for(let i = 0; i < vectorPersonasSpec.length; ++i){
+            expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[i].data.Nombre)).toBeTrue()
+        }
+    })
+})
+
+describe("Plantilla.imprimeUnaPersona", function () {
+    it("Comprueba si actualiza correctamente el articulo y se guarda la persona mostrada",
+    function() {
+        Plantilla.imprimeUnaPersona(vectorPersonasSpec[0])
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_TITULO).innerHTML.includes("Mostrar una persona")).toBeTrue()
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[0].ref['@ref'].id)).toBeTrue()
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[0].data.Nombre)).toBeTrue()
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[0].data.Fecha_nacimiento.Dia)).toBeTrue()
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[0].data.Fecha_nacimiento.Mes)).toBeTrue()
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[0].data.Fecha_nacimiento.Año)).toBeTrue()
+        for(let i = 0; i < vectorPersonasSpec[0].data.Grandes_Cumbre.length; ++i){
+            expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[0].data.Grandes_Cumbre[i])).toBeTrue()
+        }
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[0].data.cantidad_picos_8km)).toBeTrue()
+
+        expect(Plantilla.personaMostrada.ref['@ref'].id == vectorPersonasSpec[0].ref['@ref'].id).toBeTrue()
+        expect(Plantilla.personaMostrada.data.Nombre == vectorPersonasSpec[0].data.Nombre).toBeTrue()
+        expect(Plantilla.personaMostrada.data.Fecha_nacimiento.Dia == vectorPersonasSpec[0].data.Fecha_nacimiento.Dia).toBeTrue()
+        expect(Plantilla.personaMostrada.data.Fecha_nacimiento.Mes == vectorPersonasSpec[0].data.Fecha_nacimiento.Mes).toBeTrue()
+        expect(Plantilla.personaMostrada.data.Fecha_nacimiento.Año == vectorPersonasSpec[0].data.Fecha_nacimiento.Año).toBeTrue()
+        for(let i = 0; i < vectorPersonasSpec[0].data.Grandes_Cumbre.length; ++i){
+            expect(Plantilla.personaMostrada.data.Grandes_Cumbre[i] == vectorPersonasSpec[0].data.Grandes_Cumbre[i]).toBeTrue()
+        }
+        expect(Plantilla.personaMostrada.data.cantidad_picos_8km == vectorPersonasSpec[0].data.cantidad_picos_8km).toBeTrue()
+    })
+})
+
+
+
 
 /*
 IMPORTANTE

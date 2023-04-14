@@ -259,15 +259,15 @@ En este primer incremento he implementado las historias de usuario 1, 4 y 6 tal 
 
 <img src='./assets/img/inicio_incremento_1.jpg' width='1000px'>
 
-Añadida HU-01
+## *Añadida HU-01*
 
 <img src='./assets/img/HU-01.jpg' width='1000px'>
 
-Añadida HU-04
+## *Añadida HU-04*
 
 <img src='./assets/img/HU-04.jpg' width='1000px'>
 
-Añadida HU-06
+## *Añadida HU-06*
 
 <img src='./assets/img/HU-06.jpg' width='1000px'>
 
@@ -277,24 +277,43 @@ Fin de incremento
 
 # Incremento 2
 
+En este segundo incremento he implementado las historias de usuario 12, 13, 2, 3 y 7. Estas dos últimas no las tenía primeramente en el BACKLOG, pero durante la iteración las he implementado
+
 <img src='./assets/img/inicio_incremento_2.jpg' width='1000px'>
 
 
-Añadida HU-12
+## *Añadida HU-12*
 
 <img src='./assets/img/HU-12_01.jpg' widht='1000px'>
 <img src='./assets/img/HU-12_02.jpg' widht='1000px'>
 <img src='./assets/img/HU-12_03.jpg' widht='1000px'>
 
-Añadida HU-13
+## *Añadida HU-13*
 
 <img src='./assets/img/HU-13_01.jpg' widht='1000px'>
 <img src='./assets/img/HU-13_02.jpg' widht='1000px'>
 <img src='./assets/img/HU-13_03.jpg' widht='1000px'>
 
-Añadida HU-03
+## *Añadida HU-03*
 
 <img src='./assets/img/HU-03.jpg' widht='1000px'>
+
+## *Añadida HU-02*
+
+<img src='./assets/img/HU-02.jpg' widht='1000px'>
+
+Esta historia de usuario he decidido implementarla ya que anteriormente había implementado la HU-3 y haciendo una pequeña modificación podía implementar las dos mostrando solo los nombres sin ordenar y poniendo un botón que haga que se muestren ordenados
+
+## *Añadida HU-07*
+
+Esta historia de usuario la he implementado a pesar de no tenerla inicialmente en el BACKLOGe ya que se me ocurrió una idea para implementarla facilmente, por lo que decidí implementarla inmediatamente
+
+<img src='./assets/img/HU-07_01.jpg' widht='1000px'>
+<img src='./assets/img/HU-07_02.jpg' widht='1000px'>
+
+Fin de incremento
+
+<img src='./assets/img/final_incremento_2.jpg' width='1000px'>
 
 ```
 

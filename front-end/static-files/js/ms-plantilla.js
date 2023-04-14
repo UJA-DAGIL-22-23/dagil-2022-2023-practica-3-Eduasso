@@ -115,11 +115,12 @@ Plantilla.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-
     `;
 
 // Cabecera de la tabla de nombres
-Plantilla.plantillaTablaPersonas.cabeceraOrdenados = `<table width="100%" class="listado-personas">
+Plantilla.plantillaTablaPersonas.cabeceraNombres = `<table width="100%" class="listado-personas">
 <thead>
     <th width="10%">Nombre</th>
 </thead>
 <tbody>
+<center><div><a href="javascript:Plantilla.listarOrdenados()" class="opcion-secundaria mostrar">Ordenar</a></div></center>
 `;
 
 // Elemento TR que muestra los datos de una persona
@@ -138,8 +139,8 @@ Plantilla.plantillaTablaPersonas.cuerpo = `
     `;
 
 // Elemento TR que muestra los datos de una persona
-Plantilla.plantillaTablaPersonas.cuerpoOrdenados = `
-    <tr title="${Plantilla.plantillaTags.Nombre}">
+Plantilla.plantillaTablaPersonas.cuerpoNombres = `
+    <tr title="${Plantilla.plantillaTags.NOMBRE}">
         <td>${Plantilla.plantillaTags.NOMBRE}</td>
     </tr>
     `;
@@ -229,6 +230,7 @@ Plantilla.mostrarAcercaDe = function (datosDescargados) {
  * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
  */           
 Plantilla.sustituyeTags = function (plantilla, persona) {
+    //console.log(persona)
     return plantilla
         .replace(new RegExp(Plantilla.plantillaTags.ID, 'g'), persona.ref['@ref'].id)
         .replace(new RegExp(Plantilla.plantillaTags.NOMBRE, 'g'), persona.data.Nombre)
@@ -254,8 +256,8 @@ Plantilla.plantillaTablaPersonas.actualiza = function (persona) {
  * @param {Persona} Persona Objeto con los nombres que queremos escribir en el TR
  * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
  */
-Plantilla.plantillaTablaPersonas.actualizaOrdenados = function (persona) {
-    return Plantilla.sustituyeTags(this.cuerpoOrdenados, persona)
+Plantilla.plantillaTablaPersonas.actualizaNombres = function (persona) {
+    return Plantilla.sustituyeTags(this.cuerpoNombres, persona)
 }
 
 /**
@@ -338,7 +340,7 @@ Plantilla.imprimeMuchasPersonas = function (vector) {
     msj += Plantilla.plantillaTablaPersonas.pie
 
     //Borro toda la info de Article y la sustituyo por la que me interesa
-    Frontend.Article.actualizar("Listado de persona", msj)
+    Frontend.Article.actualizar("Listado de personas", msj)
 }
 
 /**
@@ -347,7 +349,8 @@ Plantilla.imprimeMuchasPersonas = function (vector) {
  */
 
 Plantilla.imprimeNombresOrdenados = function(vector) {
-     console.log(vector) // Para comprobar lo que hay en vector
+    //console.log(vector) // Para comprobar lo que hay en vector
+     
     vector.sort((a, b) => {
         if (a.data.Nombre == b.data.Nombre) {
           return 0;
@@ -357,14 +360,25 @@ Plantilla.imprimeNombresOrdenados = function(vector) {
         }
         return 1;
       });
+      
     // Compongo el contenido que se va a mostrar dentro de la tabla
-    let msj = Plantilla.plantillaTablaPersonas.cabeceraOrdenados
+    let msj = Plantilla.plantillaTablaPersonas.cabeceraNombres
     
-    vector.forEach(e => msj += Plantilla.plantillaTablaPersonas.actualizaOrdenados(e))
+    vector.forEach(e => msj += Plantilla.plantillaTablaPersonas.actualizaNombres(e))
     msj += Plantilla.plantillaTablaPersonas.pie
 
     //Borro toda la info de Article y la sustituyo por la que me interesa
-    Frontend.Article.actualizar("Personas ordenadas alfabéticamente", msj)
+    Frontend.Article.actualizar("Nombres de personas ordenadas alfabéticamente", msj)
+}
+
+Plantilla.imprimeNombres = function(vector) {
+    let msj = Plantilla.plantillaTablaPersonas.cabeceraNombres
+    
+    vector.forEach(e => msj += Plantilla.plantillaTablaPersonas.actualizaNombres(e))
+    msj += Plantilla.plantillaTablaPersonas.pie
+
+    //Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Nombres de personas", msj)
 }
 
 /**
@@ -420,6 +434,11 @@ Plantilla.procesarAcercaDe = function () {
  */
 Plantilla.listar = function (){
     Plantilla.recupera(Plantilla.imprimeMuchasPersonas);
+}
+
+
+Plantilla.listarNombres = function (){
+    Plantilla.recupera(Plantilla.imprimeNombres)
 }
 
 /**

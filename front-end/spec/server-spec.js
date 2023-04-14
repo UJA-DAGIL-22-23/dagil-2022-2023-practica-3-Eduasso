@@ -39,5 +39,48 @@ describe('Servidor FRONT-END:', () => {
           })
           .end((error) => { error ? done.fail(error) : done() })
       });
+
+    it('Cualquier otro acceso a html, como : /otro.html devuelve también index.html', (done) => {
+        supertest(app)
+          .get('/otro.html')
+          .expect(200)
+          .expect('Content-Type', /html/)
+          .expect(function (res) {
+            //console.log( res.text ); // Para comprobar qué contiene exactamente res.text
+            assert(res.text.includes('<h1>Aplicación Microservicios Plantilla</h1>'));
+            assert(res.text.includes('<article id="seccion-principal">'));
+  
+          })
+          .end((error) => { error ? done.fail(error) : done() })
+      });
+      
+    it('Cualquier otro tipo de fichero, como : /assets/img.png devuelve también index.html', (done) => {
+        supertest(app)
+          .get('/assets/img.png')
+          .expect(200)
+          .expect('Content-Type', /html/)
+          .expect(function (res) {
+            //console.log( res.text ); // Para comprobar qué contiene exactamente res.text
+            assert(res.text.includes('<h1>Aplicación Microservicios Plantilla</h1>'));
+            assert(res.text.includes('<article id="seccion-principal">'));
+  
+          })
+          .end((error) => { error ? done.fail(error) : done() })
+      });
+
+    it('Cualquier otra ruta, como : /perro/gato/periquito también index.html', (done) => {
+        supertest(app)
+          .get('/perro/gato/periquito')
+          .expect(200)
+          .expect('Content-Type', /html/)
+          .expect(function (res) {
+            //console.log( res.text ); // Para comprobar qué contiene exactamente res.text
+            assert(res.text.includes('<h1>Aplicación Microservicios Plantilla</h1>'));
+            assert(res.text.includes('<article id="seccion-principal">'));
+  
+          })
+          .end((error) => { error ? done.fail(error) : done() })
+      });
+  
   })
 })

@@ -44,7 +44,7 @@ describe('API Gateway: rutas estáticas', () => {
 
 describe('API Gateway: acceso a', () => {
   describe('BBDD Personas', () => {
-    it(' > Obtener todas las personas: debe tener un campo data que es un array de 3 objetos', (done) => {
+    it(' > Obtener todas las personas: debe tener un campo data que es un array de 10 objetos', (done) => {
       supertest(app)
         .get('/plantilla/getTodas')
         .expect(200)
@@ -71,6 +71,7 @@ describe('API Gateway: acceso a', () => {
         })
         .end((error) => { error ? done.fail(error) : done() })
     });
+
   });
 
 });
