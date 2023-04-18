@@ -250,6 +250,21 @@ describe("Plantilla.imprimeMuchasPersonas", function () {
     })
 })
 
+/*
+describe("Plantilla.imprimePersonasBusqueda", function () {
+    it("Comprueba si actualiza correctamente el artículo",
+    function () {
+        let vectorResultante = Plantilla.imprimePersonasBusqueda(vectorPersonasSpec, "Ezio")
+        //console.log(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML)
+        expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_TITULO).innerHTML.includes("Resultado de la Búsqueda")).toBeTrue()
+        expect(vectorResultante.length == 1).toBeTrue()
+        //expect(vectorResultante[0].ref['@ref'].id == vectorPersonasSpec[1].ref['@ref'].id).toBeTrue()
+        expect(vectorResultante[0].data.Nombre == vectorPersonasSpec[0].data.Nombre).toBeTrue()
+        //expect(document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO).innerHTML.includes(vectorPersonasSpec[1].data.Nombre)).toBeTrue()
+    } )
+})
+*/
+
 describe("Plantilla.imprimeNombres", function() {
     it("Comprueba si actualiza correctamente el articulo",
     function() {

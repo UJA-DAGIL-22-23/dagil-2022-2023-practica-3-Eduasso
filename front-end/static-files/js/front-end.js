@@ -25,44 +25,6 @@ Frontend.ID_SECCION_PRINCIPAL_CONTENIDO = "seccion-principal-contenido"
 /// Objeto Article dentro Frontend para tratar con el contenido del elemento Article del DOM
 Frontend.Article = {}
 
-
-/**
- * Quita a un elemento identificado por su ID la clase indicada por nombreClase
- * @param {string} idElemento Nombre del id del elemento
- * @param {string} nombreClase Nombre de la clase a quitar
- */
-Frontend.quitarClase = function (idElemento, nombreClase) {
-    let elemento = document.getElementById(idElemento)
-    let clase = elemento.getAttribute("class")
-    clase = clase.split(" ") // Separo la cadena por " "
-        .filter(e => e) // Quito las cadenas vacías que pudiera haber
-        .filter(e => e != nombreClase) // Quito la cadena indicada por nombreClase
-        .join(" ") // creo una sola cadena con todas las clases separadas por espacios
-    elemento.setAttribute("class", clase)
-
-    return this;
-}
-
-/**
- * Añade a un elemento identificado por su ID la clase indicada por nombreClase
- * @param {string} idElemento Nombre del id del elemento
- * @param {string} nombreClase Nombre de la clase a quitar
- */
-Frontend.aniadirClase = function (idElemento, nombreClase) {
-    let elemento = document.getElementById(idElemento)
-    let clase = elemento.getAttribute("class")
-    clase = clase.split(" ") // Separo la cadena por " "
-        .filter(e => e) // Quito las cadenas vacías que pudiera haber
-        .filter(e => e != nombreClase) // Quito la cadena indicada por nombreClase, por si ya estuviera
-        .concat(nombreClase) // Añado la clase indicada en nombreClase
-        .join(" ") // creo una sola cadena con todas las clases separadas por espacios
-    elemento.setAttribute("class", clase)
-
-    return this;
-}
-
-
-
 /**
  * Quita a un elemento del cual se pasa él mismo o su ID la clase indicada por nombreClase
  * @param {string} elemento Elemento o id del elemento
@@ -71,6 +33,7 @@ Frontend.aniadirClase = function (idElemento, nombreClase) {
 Frontend.quitarClase = function (elemento, nombreClase) {
     elemento = (typeof elemento==="string")? document.getElementById(elemento) : elemento;
     let clase = elemento.getAttribute("class")
+    clase = clase?clase:""
     clase = clase.split(" ") // Separo la cadena por " "
         .filter(e => e) // Quito las cadenas vacías que pudiera haber
         .filter(e => e != nombreClase) // Quito la cadena indicada por nombreClase
@@ -88,6 +51,7 @@ Frontend.quitarClase = function (elemento, nombreClase) {
 Frontend.aniadirClase = function (elemento, nombreClase) {
     elemento = (typeof elemento==="string")? document.getElementById(elemento) : elemento;
     let clase = elemento.getAttribute("class")
+    clase = clase?clase:""
     clase = clase.split(" ") // Separo la cadena por " "
         .filter(e => e) // Quito las cadenas vacías que pudiera haber
         .filter(e => e != nombreClase) // Quito la cadena indicada por nombreClase, por si ya estuviera

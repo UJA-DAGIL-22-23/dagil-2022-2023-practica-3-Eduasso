@@ -316,6 +316,15 @@ Fin de incremento
 
 <img src='./assets/img/final_incremento_2.jpg' width='1000px'>
 
+# Incremento 3
+
+<img src='./assets/img/inicio_incremento_3.jpg' width='1000px'>
+
+## *Añadida HU-08*
+
+<img src='./assets/img/HU-08_01.jpg' width='1000px'>
+<img src='./assets/img/HU-08_02.jpg' width='1000px'>
+
 ```
 
 

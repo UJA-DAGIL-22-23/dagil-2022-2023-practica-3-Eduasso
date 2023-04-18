@@ -13,6 +13,11 @@ let Plantilla = {};
 let TodasPersonas = null;
 let pos = null;
 
+Plantilla.formBusqueda = {
+    busqueda: "form-busqueda"    
+}
+
+
 /// Nombre de los campos del formulario para editar una persona
 Plantilla.form = {
     NOMBRE: "form-persona-nombre",
@@ -101,7 +106,12 @@ Plantilla.plantillaFormularioPersona.formulario = `
 Plantilla.plantillaTablaPersonas = {}
 
 // Cabecera de la tabla
-Plantilla.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-personas">
+Plantilla.plantillaTablaPersonas.cabecera = `
+            <form method='post' action=''>
+                <input type="text" value="" id="form-busqueda"/> 
+                <div><a href="javascript:Plantilla.listarBusqueda()" class="opcion-secundaria mostrar">Buscar</a></div>
+            </form>
+                <table width="100%" class="listado-personas">
                     <thead>
                         <th width="10%">ID</th>
                         <th width="10%">Nombre</th>
@@ -344,6 +354,38 @@ Plantilla.imprimeMuchasPersonas = function (vector) {
 }
 
 /**
+ * Función para mostrar en pantalla todas las personas que cumplen con el requisito de busqueda.
+ * @param {Vector_de_personas} vector Vector con los datos de las personas a mostrar
+ */
+Plantilla.imprimePersonasBusqueda = function (vector, buscar) {
+    // console.log(vector) // Para comprobar lo que hay en vector
+    let vectorBusqueda = []
+    let vectorBusquedaMostrar = {
+        data: []
+    }
+    //console.log("La busqueda es: ", document.getElementById("form-busqueda").value)
+    buscar = buscar || document.getElementById("form-busqueda").value
+    for(let i = 0; i < vector.length; ++i){
+        if(vector[i].data.Nombre.includes(buscar)){
+            vectorBusqueda.push(vector[i])
+            vectorBusquedaMostrar.data.push(vector[i])
+        }
+    }
+    TodasPersonas = vectorBusquedaMostrar
+    console.log("Vector que coinciden con los nombres: ", vectorBusqueda)
+    // Compongo el contenido que se va a mostrar dentro de la tabla
+    
+    let msj = Plantilla.plantillaTablaPersonas.cabecera
+    
+    vectorBusqueda.forEach(e => msj += Plantilla.plantillaTablaPersonas.actualiza(e))
+    msj += Plantilla.plantillaTablaPersonas.pie
+
+    //Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Resultado de la Búsqueda", msj)
+    return vectorBusqueda
+}
+
+/**
  * Función para mostrar en pantalla todas lo nombres ordenados alfabéticamente que se han recuperado de la BBDD.
  * @param {Vector_de_personas} vector Vector con los datos de las personas a mostrar
  */
@@ -433,9 +475,13 @@ Plantilla.procesarAcercaDe = function () {
  * Función principal para recuperar las personas desde el MS y, posteriormente, imprimirlas.
  */
 Plantilla.listar = function (){
+    //console.log("La busqueda es:",document.getElementById("form-busqueda").value)
     Plantilla.recupera(Plantilla.imprimeMuchasPersonas);
 }
 
+Plantilla.listarBusqueda = function (){
+    Plantilla.recupera(Plantilla.imprimePersonasBusqueda);
+}
 
 Plantilla.listarNombres = function (){
     Plantilla.recupera(Plantilla.imprimeNombres)
